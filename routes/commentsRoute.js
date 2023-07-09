@@ -36,7 +36,7 @@ router.post('/posts/:postId/comments', authMiddleware, async (req, res) => {
   }
 });
 
-// 댓글 목록 조회 API (GET)
+// 댓글 조회 API (GET)
 router.get('/posts/:postId/comments', async (req, res) => {
   const { postId } = req.params;
 

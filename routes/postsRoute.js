@@ -85,7 +85,7 @@ router.get('/posts/:postId', async (req, res) => {
 });
 
 // 본인 게시글 조회 API (GET)
-router.get('/mypost', authMiddleware, async (req, res) => {
+router.get('/myposts', authMiddleware, async (req, res) => {
   const { userId } = res.locals.user;
 
   const posts = await Posts.findAll({
