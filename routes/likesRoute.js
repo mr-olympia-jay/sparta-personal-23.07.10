@@ -87,6 +87,7 @@ router.put('/posts/:postId/like', authMiddleware, async (req, res) => {
   }
 });
 
+// 사용자가 '좋아요' 표시한 게시물 조회 API (GET)
 router.get('/like', authMiddleware, async (req, res) => {
   try {
     const { userId } = res.locals.user;
