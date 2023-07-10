@@ -13,7 +13,6 @@ const { Op } = require('sequelize');
 // 게시글 '좋아요' API (PUT)
 router.put('/posts/:postId/like', authMiddleware, async (req, res) => {
   const { userId } = res.locals.user;
-  console.log('this is userId =>', userId);
   const { postId } = req.params;
 
   let { likePostIds } = await UserInfos.findOne({ where: { userId } });
@@ -33,20 +32,16 @@ router.put('/posts/:postId/like', authMiddleware, async (req, res) => {
           },
         }
       );
-      console.log('after unlike =>', likeCounts);
       // UserInfos의 likePostIds에 '좋아요' 표시를 취소한 'postId'를 제거합니다.
       let { likePostIds } = await UserInfos.findOne({ where: { userId } });
       const newLikePostsIdsArray = likePostsIdsArray.filter((item) => item != postId && !'');
-      console.log('newLikePostsIdsArray after unlike =>', newLikePostsIdsArray);
       likePostIds = String(newLikePostsIdsArray); // 배열 => 문자열
-      console.log('likePostIds =>', likePostIds);
       await UserInfos.update(
         { likePostIds },
         {
           where: { userId },
         }
       );
-      console.log('after unlike =>', likePostIds);
       return res.status(200).json({ message: '게시글의 좋아요를 취소하였습니다.' });
     } catch {
       return res.status(400).json({ message: '게시글 좋아요 취소에 실패하였습니다.' });
@@ -65,7 +60,6 @@ router.put('/posts/:postId/like', authMiddleware, async (req, res) => {
           },
         }
       );
-      console.log('after like =>', likeCounts);
       // UserInfos의 likePostIds에 '좋아요' 표시한 'postId'를 추가합니다.
       let { likePostIds } = await UserInfos.findOne({ where: { userId } });
       if (likePostIds === '') {
@@ -79,7 +73,6 @@ router.put('/posts/:postId/like', authMiddleware, async (req, res) => {
           where: { userId },
         }
       );
-      console.log('after like =>', likePostIds);
       return res.status(200).json({ message: '게시글의 좋아요를 등록하였습니다.' });
     } catch {
       return res.status(400).json({ message: '게시글 좋아요에 실패하였습니다.' });
