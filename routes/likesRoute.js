@@ -55,9 +55,7 @@ router.put('/posts/:postId/like', authMiddleware, async (req, res) => {
       await Posts.update(
         { likeCounts },
         {
-          where: {
-            [Op.and]: [{ postId }],
-          },
+          where: { postId },
         }
       );
       // UserInfos의 likePostIds에 '좋아요' 표시한 'postId'를 추가합니다.
